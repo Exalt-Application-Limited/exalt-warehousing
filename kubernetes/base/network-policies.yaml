@@ -1,0 +1,262 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: inventory-service-netpol
+  labels:
+    app: inventory-service
+    domain: warehousing
+spec:
+  podSelector:
+    matchLabels:
+      app: inventory-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API Gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8082
+  # Allow traffic from warehouse-management-service
+  - from:
+    - podSelector:
+        matchLabels:
+          app: warehouse-management-service
+    ports:
+    - protocol: TCP
+      port: 8082
+  # Allow traffic from fulfillment-service
+  - from:
+    - podSelector:
+        matchLabels:
+          app: fulfillment-service
+    ports:
+    - protocol: TCP
+      port: 8082
+  # Allow Prometheus scraping
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+      podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 8090
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow database access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow Kafka access
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: kafka
+    ports:
+    - protocol: TCP
+      port: 9092
+  # Allow Service Registry access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: service-registry
+    ports:
+    - protocol: TCP
+      port: 8761
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: warehouse-management-netpol
+  labels:
+    app: warehouse-management-service
+    domain: warehousing
+spec:
+  podSelector:
+    matchLabels:
+      app: warehouse-management-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API Gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8086
+  # Allow traffic from mobile apps
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: mobile
+    ports:
+    - protocol: TCP
+      port: 8086
+  # Allow Prometheus scraping
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+      podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 8096
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow database access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow Kafka access
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: kafka
+    ports:
+    - protocol: TCP
+      port: 9092
+  # Allow Service Registry access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: service-registry
+    ports:
+    - protocol: TCP
+      port: 8761
+  # Allow inventory-service access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: inventory-service
+    ports:
+    - protocol: TCP
+      port: 8082
+  # Allow order-service access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: order-service
+    ports:
+    - protocol: TCP
+      port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: warehouse-analytics-netpol
+  labels:
+    app: warehouse-analytics
+    domain: warehousing
+spec:
+  podSelector:
+    matchLabels:
+      app: warehouse-analytics
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from API Gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8087
+  # Allow traffic from admin dashboards
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: frontend
+    ports:
+    - protocol: TCP
+      port: 8087
+  # Allow Prometheus scraping
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+      podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 8097
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow database access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow Elasticsearch access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: elasticsearch
+    ports:
+    - protocol: TCP
+      port: 9200
+  # Allow Kafka access
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: kafka
+    ports:
+    - protocol: TCP
+      port: 9092
+  # Allow Service Registry access
+  - to:
+    - podSelector:
+        matchLabels:
+          app: service-registry
+    ports:
+    - protocol: TCP
+      port: 8761

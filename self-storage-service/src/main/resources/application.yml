@@ -1,0 +1,312 @@
+# Self Storage Service Configuration
+spring:
+  application:
+    name: self-storage-service
+  
+  profiles:
+    active: development
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/self_storage_db
+    username: ${DB_USERNAME:self_storage_user}
+    password: ${DB_PASSWORD:self_storage_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: SelfStorageCP
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+        jdbc.batch_versioned_data: true
+    show-sql: false
+    open-in-view: false
+  
+  # Flyway Configuration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    table: flyway_schema_history_self_storage
+  
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  
+  # Elasticsearch Configuration
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
+    username: ${ELASTICSEARCH_USERNAME:}
+    password: ${ELASTICSEARCH_PASSWORD:}
+    connection-timeout: 10s
+    socket-timeout: 30s
+  
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+        spring.json.type.mapping: >
+          locationEvent:com.ecosystem.warehousing.selfstorage.dto.StatusChangeEvent,
+          performanceEvent:com.ecosystem.warehousing.selfstorage.dto.PerformanceUpdateEvent
+      acks: all
+      retries: 3
+      batch-size: 16384
+      linger-ms: 5
+    consumer:
+      group-id: self-storage-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.ecosystem.warehousing.selfstorage.dto"
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 500
+    listener:
+      ack-mode: manual_immediate
+  
+  # Security Configuration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8080/auth/realms/ecosystem}
+          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8080/auth/realms/ecosystem/protocol/openid-connect/certs}
+  
+  # Jackson Configuration
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: false
+      accept-single-value-as-array: true
+    time-zone: UTC
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8088}
+  servlet:
+    context-path: /self-storage-service
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  forward-headers-strategy: native
+
+# Management and Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: self-storage-service
+      environment: ${ENVIRONMENT:development}
+  health:
+    elasticsearch:
+      enabled: true
+    redis:
+      enabled: true
+
+# Application Specific Configuration
+self-storage:
+  # Verification Configuration
+  verification:
+    auto-verify: false
+    verification-timeout: PT24H
+    address-validation:
+      provider: google-maps
+      api-key: ${GOOGLE_MAPS_API_KEY:}
+      timeout: PT10S
+      retry-attempts: 3
+  
+  # Performance Configuration
+  performance:
+    score-calculation:
+      processing-time-weight: 0.4
+      fulfillment-rate-weight: 0.4
+      utilization-efficiency-weight: 0.2
+    thresholds:
+      excellent-score: 90
+      good-score: 75
+      poor-score: 60
+      critical-utilization: 95
+      warning-utilization: 85
+  
+  # Pickup Configuration
+  pickup:
+    default-duration-minutes: 30
+    max-advance-booking-days: 30
+    optimal-slot-calculation:
+      efficiency-weight: 0.6
+      wait-time-weight: 0.4
+  
+  # Notification Configuration
+  notifications:
+    enabled: true
+    channels:
+      email: true
+      sms: false
+      push: true
+    templates:
+      location-registered: "location-registered-template"
+      location-activated: "location-activated-template"
+      verification-completed: "verification-completed-template"
+  
+  # Cache Configuration
+  cache:
+    location-details:
+      ttl: PT1H
+      max-size: 1000
+    performance-metrics:
+      ttl: PT15M
+      max-size: 500
+    nearby-locations:
+      ttl: PT30M
+      max-size: 200
+
+# Logging Configuration
+logging:
+  level:
+    com.ecosystem.warehousing.selfstorage: INFO
+    org.springframework.security: WARN
+    org.springframework.kafka: WARN
+    org.elasticsearch: WARN
+    org.springframework.data.elasticsearch: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/self-storage-service.log
+
+# External Service Configuration
+external-services:
+  courier-service:
+    base-url: ${COURIER_SERVICE_URL:http://localhost:8086}
+    timeout: PT30S
+    retry-attempts: 3
+  
+  inventory-service:
+    base-url: ${INVENTORY_SERVICE_URL:http://localhost:8087}
+    timeout: PT30S
+    retry-attempts: 3
+  
+  vendor-service:
+    base-url: ${VENDOR_SERVICE_URL:http://localhost:8088}
+    timeout: PT30S
+    retry-attempts: 3
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: development
+  
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    com.ecosystem.warehousing.selfstorage: DEBUG
+    org.springframework.data.elasticsearch: DEBUG
+    org.hibernate.SQL: DEBUG
+
+self-storage:
+  verification:
+    auto-verify: true
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: production
+  
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.ecosystem.warehousing.selfstorage: INFO
+    org.springframework.security: WARN
+
+self-storage:
+  verification:
+    auto-verify: false
+  cache:
+    location-details:
+      ttl: PT4H
+      max-size: 5000
+    performance-metrics:
+      ttl: PT1H
+      max-size: 2000
+
+---
+# Testing Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  
+  flyway:
+    enabled: false
+  
+  kafka:
+    producer:
+      bootstrap-servers: ${spring.embedded.kafka.brokers}
+    consumer:
+      bootstrap-servers: ${spring.embedded.kafka.brokers}

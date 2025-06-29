@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: staff-mobile-app
+  namespace: warehousing
+  labels:
+    app: staff-mobile-app
+    domain: warehousing
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: staff-mobile-app
+  template:
+    metadata:
+      labels:
+        app: staff-mobile-app
+        domain: warehousing
+        tier: frontend
+    spec:
+      containers:
+      - name: staff-mobile-app
+        image: ${DOCKER_REGISTRY}/staff-mobile-app:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: staff-mobile-app-config
+              key: api-url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staff-mobile-app-config
+  namespace: warehousing
+data:
+  api-url: "http://api-gateway-service.warehousing.svc.cluster.local"
+  app-name: "staff-mobile-app"

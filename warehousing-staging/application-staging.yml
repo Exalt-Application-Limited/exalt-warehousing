@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: staging
+  datasource:
+    url: jdbc:postgresql://postgres-staging:5432/warehousing_staging
+    username: staging_user
+    password: staging_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    bootstrap-servers: kafka-staging:9092
+
+logging:
+  level:
+    root: INFO
+    com.ecosystem.warehousing: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

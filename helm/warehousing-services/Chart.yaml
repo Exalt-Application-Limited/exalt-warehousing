@@ -1,0 +1,31 @@
+apiVersion: v2
+name: warehousing-services
+description: Helm chart for Warehousing Domain Microservices
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://github.com/exalt/warehousing-services
+sources:
+  - https://github.com/exalt/warehousing-services
+maintainers:
+  - name: Warehousing Team
+    email: warehousing@exalt.com
+dependencies:
+  - name: postgresql
+    version: "12.1.9"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: "17.3.14"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: elasticsearch
+    version: "19.13.14"
+    repository: https://charts.bitnami.com/bitnami
+    condition: elasticsearch.enabled
+keywords:
+  - warehousing
+  - microservices
+  - inventory
+  - logistics
+  - analytics

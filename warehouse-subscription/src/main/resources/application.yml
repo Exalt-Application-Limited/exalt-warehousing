@@ -1,0 +1,215 @@
+# Warehouse Subscription Service Configuration
+spring:
+  application:
+    name: warehouse-subscription-service
+  
+  profiles:
+    active: development
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/warehouse_subscription_db
+    username: ${DB_USERNAME:warehouse_sub_user}
+    password: ${DB_PASSWORD:warehouse_sub_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: WarehouseSubscriptionCP
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+    open-in-view: false
+  
+  # Flyway Configuration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    table: flyway_schema_history_subscription
+  
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+      acks: all
+      retries: 3
+    consumer:
+      group-id: warehouse-subscription-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.ecosystem.warehousing.subscription.dto"
+    listener:
+      ack-mode: manual_immediate
+  
+  # Security Configuration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8080/auth/realms/ecosystem}
+          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8080/auth/realms/ecosystem/protocol/openid-connect/certs}
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8084}
+  servlet:
+    context-path: /warehouse-subscription-service
+  compression:
+    enabled: true
+
+# Management and Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Application Specific Configuration
+warehouse-subscription:
+  # Stripe Configuration
+  stripe:
+    public-key: ${STRIPE_PUBLIC_KEY:}
+    secret-key: ${STRIPE_SECRET_KEY:}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+    api-version: "2023-10-16"
+  
+  # Billing Configuration
+  billing:
+    cycle-day: 1  # Day of month to run billing
+    grace-period-days: 5
+    late-fee-percentage: 5.0
+    auto-billing-enabled: true
+    invoice-generation-enabled: true
+  
+  # Usage Tracking Configuration
+  usage:
+    tracking-enabled: true
+    aggregation-interval: PT1H  # 1 hour
+    retention-days: 730  # 2 years
+    real-time-updates: true
+  
+  # Notification Configuration
+  notifications:
+    enabled: true
+    channels:
+      email: true
+      sms: false
+      webhook: true
+    templates:
+      subscription-created: "subscription-created-template"
+      payment-due: "payment-due-template"
+      payment-failed: "payment-failed-template"
+      plan-changed: "plan-changed-template"
+  
+  # Plan Configuration
+  plans:
+    trial:
+      duration-days: 30
+      storage-limit-gb: 100
+      api-calls-limit: 1000
+    basic:
+      monthly-price: 99.00
+      storage-limit-gb: 1000
+      api-calls-limit: 10000
+    standard:
+      monthly-price: 299.00
+      storage-limit-gb: 5000
+      api-calls-limit: 50000
+    premium:
+      monthly-price: 599.00
+      storage-limit-gb: 15000
+      api-calls-limit: 150000
+    enterprise:
+      monthly-price: 1299.00
+      storage-limit-gb: 50000
+      api-calls-limit: 500000
+
+# Logging Configuration
+logging:
+  level:
+    com.ecosystem.warehousing.subscription: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: development
+  
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    com.ecosystem.warehousing.subscription: DEBUG
+
+warehouse-subscription:
+  billing:
+    auto-billing-enabled: false
+  notifications:
+    enabled: false
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: production
+
+logging:
+  level:
+    com.ecosystem.warehousing.subscription: INFO
+
+warehouse-subscription:
+  billing:
+    auto-billing-enabled: true
+  notifications:
+    enabled: true

@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: warehousing-grafana-dashboards
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  warehousing-overview.json: |
+    {
+      "dashboard": {
+        "title": "Warehousing Services Overview",
+        "panels": [
+          {
+            "title": "Service Health Status",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "up{job=~\"inventory-service|warehouse-management-service|warehouse-analytics\"}"
+              }
+            ]
+          },
+          {
+            "title": "Request Rate",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(rate(http_server_requests_seconds_count{application=~\"inventory-service|warehouse-management-service|warehouse-analytics\"}[5m])) by (application)"
+              }
+            ]
+          },
+          {
+            "title": "Response Time (p95)",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=~\"inventory-service|warehouse-management-service|warehouse-analytics\"}[5m])) by (application, le))"
+              }
+            ]
+          },
+          {
+            "title": "Error Rate",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(rate(http_server_requests_seconds_count{application=~\"inventory-service|warehouse-management-service|warehouse-analytics\",status=~\"5..\"}[5m])) by (application)"
+              }
+            ]
+          },
+          {
+            "title": "JVM Memory Usage",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "jvm_memory_used_bytes{application=~\"inventory-service|warehouse-management-service|warehouse-analytics\"} / 1024 / 1024"
+              }
+            ]
+          },
+          {
+            "title": "Database Connection Pool",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "hikaricp_connections_active{application=~\"inventory-service|warehouse-management-service|warehouse-analytics\"}"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  inventory-service-dashboard.json: |
+    {
+      "dashboard": {
+        "title": "Inventory Service Dashboard",
+        "panels": [
+          {
+            "title": "Inventory Operations",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(rate(inventory_operations_total[5m])) by (operation)"
+              }
+            ]
+          },
+          {
+            "title": "Stock Levels by Status",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+            "type": "piechart",
+            "targets": [
+              {
+                "expr": "inventory_stock_level_by_status"
+              }
+            ]
+          },
+          {
+            "title": "Reservation Processing Time",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, sum(rate(reservation_processing_duration_seconds_bucket[5m])) by (le))"
+              }
+            ]
+          },
+          {
+            "title": "Low Stock Alerts",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "inventory_low_stock_items_total"
+              }
+            ]
+          }
+        ]
+      }
+    }

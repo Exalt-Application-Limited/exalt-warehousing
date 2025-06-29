@@ -1,0 +1,9 @@
+The correct XML tags are:
+Opening tag: <n>
+Closing tag: </n>
+
+WRONG:
+<n>Warehousing Services</n>
+
+CORRECT:
+<n>Warehousing Services</n>

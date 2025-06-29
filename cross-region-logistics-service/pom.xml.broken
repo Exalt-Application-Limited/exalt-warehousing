@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.exalt.warehousing</groupId>
+        <artifactId>cross-region-logistics</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.exalt.warehousing</groupId>
+    <artifactId>cross-region-logistics</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>Cross-Region Logistics Service</name>
+    <description>Cross-region warehouse transfers and logistics coordination service</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <testcontainers.version>1.19.1</testcontainers.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+            <dependency>
+                <groupId>com.exalt.warehousing</groupId>
+                <artifactId>cross-region-logistics</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Warehousing Shared Library -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- Spring Boot Starters -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <!-- Kafka -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <!-- Database -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <!-- Redis -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+        </dependency>
+
+        <!-- SpringDoc OpenAPI/Swagger -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.exalt.warehousing</groupId>
+            <artifactId>cross-region-logistics</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.exalt.warehousing</groupId>
+                <artifactId>cross-region-logistics</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>com.exalt.warehousing</groupId>
+                            <artifactId>cross-region-logistics</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

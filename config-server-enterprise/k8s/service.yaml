@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server-enterprise-service
+  namespace: warehousing
+  labels:
+    app: config-server-enterprise
+    domain: warehousing
+spec:
+  selector:
+    app: config-server-enterprise
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

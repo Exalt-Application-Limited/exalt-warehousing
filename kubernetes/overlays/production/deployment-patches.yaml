@@ -1,0 +1,60 @@
+# Production deployment patches
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: inventory-service
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms1g -Xmx1800m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-management-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: warehouse-management-service
+        resources:
+          requests:
+            memory: "1.5Gi"
+            cpu: "750m"
+          limits:
+            memory: "3Gi"
+            cpu: "1500m"
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms1500m -Xmx2800m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-analytics
+spec:
+  template:
+    spec:
+      containers:
+      - name: warehouse-analytics
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms2g -Xmx3800m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication"

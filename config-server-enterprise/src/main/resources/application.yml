@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+        git:
+          uri: ${CONFIG_GIT_URI:https://github.com/exalt-ecosystem/config-repo}
+          default-label: main
+          clone-on-start: true
+
+# Enterprise Management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,configprops,env
+  endpoint:
+    health:
+      show-details: always
+
+# Enterprise Logging
+logging:
+  level:
+    com.exalt.ecosystem: DEBUG
+    org.springframework.cloud.config: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n"

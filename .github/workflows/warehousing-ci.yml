@@ -1,0 +1,401 @@
+name: Warehousing Services CI/CD
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+    paths:
+      - 'warehousing/**'
+      - '.github/workflows/warehousing-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'warehousing/**'
+
+env:
+  JAVA_VERSION: 17
+  MAVEN_OPTS: -Xmx2048m
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      services: ${{ steps.changes.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            billing-service:
+              - 'warehousing/billing-service/**'
+            cross-region-logistics-service:
+              - 'warehousing/cross-region-logistics-service/**'
+            fulfillment-service:
+              - 'warehousing/fulfillment-service/**'
+            inventory-service:
+              - 'warehousing/inventory-service/**'
+            self-storage-service:
+              - 'warehousing/self-storage-service/**'
+            warehouse-analytics:
+              - 'warehousing/warehouse-analytics/**'
+            warehouse-management-service:
+              - 'warehousing/warehouse-management-service/**'
+            warehouse-onboarding:
+              - 'warehousing/warehouse-onboarding/**'
+            warehouse-operations:
+              - 'warehousing/warehouse-operations/**'
+            warehouse-subscription:
+              - 'warehousing/warehouse-subscription/**'
+            shared:
+              - 'warehousing/warehousing-shared/**'
+              - 'warehousing/pom.xml'
+
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Run Checkstyle
+        run: |
+          cd warehousing
+          mvn checkstyle:check -Dcheckstyle.failOnViolation=true
+          
+      - name: Run SpotBugs
+        run: |
+          cd warehousing
+          mvn spotbugs:check
+          
+      - name: Run PMD
+        run: |
+          cd warehousing
+          mvn pmd:check
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Run OWASP Dependency Check
+        run: |
+          cd warehousing
+          mvn dependency-check:check
+          
+      - name: Upload Security Scan Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-reports
+          path: warehousing/target/dependency-check-report.html
+
+  build-shared:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: contains(needs.changes.outputs.services, 'shared')
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Build Warehousing Parent
+        run: |
+          cd warehousing
+          mvn clean install -N
+          
+      - name: Build Warehousing Shared
+        run: |
+          cd warehousing/warehousing-shared
+          mvn clean install
+          
+      - name: Upload Shared Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: warehousing-shared
+          path: ~/.m2/repository/com/ecosystem/warehousing-shared/
+
+  test-services:
+    runs-on: ubuntu-latest
+    needs: [changes, build-shared]
+    if: always() && (needs.build-shared.result == 'success' || needs.build-shared.result == 'skipped')
+    strategy:
+      matrix:
+        service: [
+          billing-service,
+          cross-region-logistics-service,
+          fulfillment-service,
+          inventory-service,
+          self-storage-service,
+          warehouse-analytics,
+          warehouse-management-service,
+          warehouse-onboarding,
+          warehouse-operations,
+          warehouse-subscription
+        ]
+      fail-fast: false
+      
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Download Shared Artifact
+        if: needs.build-shared.result == 'success'
+        uses: actions/download-artifact@v3
+        with:
+          name: warehousing-shared
+          path: ~/.m2/repository/com/ecosystem/warehousing-shared/
+          
+      - name: Build Parent POM
+        run: |
+          cd warehousing
+          mvn clean install -N
+          
+      - name: Test ${{ matrix.service }}
+        run: |
+          cd warehousing/${{ matrix.service }}
+          mvn clean test
+          
+      - name: Generate Test Report
+        if: always()
+        run: |
+          cd warehousing/${{ matrix.service }}
+          mvn surefire-report:report
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-${{ matrix.service }}
+          path: warehousing/${{ matrix.service }}/target/surefire-reports/
+          
+      - name: Upload Coverage Reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: coverage-${{ matrix.service }}
+          path: warehousing/${{ matrix.service }}/target/site/jacoco/
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [test-services]
+    if: always() && needs.test-services.result == 'success'
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: warehousing_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      kafka:
+        image: confluentinc/cp-kafka:7.5.0
+        env:
+          KAFKA_BROKER_ID: 1
+          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+          KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        ports:
+          - 9092:9092
+          
+      zookeeper:
+        image: confluentinc/cp-zookeeper:7.5.0
+        env:
+          ZOOKEEPER_CLIENT_PORT: 2181
+          ZOOKEEPER_TICK_TIME: 2000
+        ports:
+          - 2181:2181
+          
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Wait for services
+        run: |
+          sleep 30
+          
+      - name: Run Integration Tests
+        run: |
+          cd warehousing/integration-tests
+          mvn test -Dspring.profiles.active=integration-test
+        env:
+          POSTGRES_URL: jdbc:postgresql://localhost:5432/warehousing_test
+          KAFKA_BROKERS: localhost:9092
+          
+      - name: Upload Integration Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: integration-test-results
+          path: warehousing/integration-tests/target/surefire-reports/
+
+  build-images:
+    runs-on: ubuntu-latest
+    needs: [test-services, integration-tests]
+    if: always() && needs.test-services.result == 'success' && needs.integration-tests.result == 'success'
+    strategy:
+      matrix:
+        service: [
+          billing-service,
+          cross-region-logistics-service,
+          fulfillment-service,
+          inventory-service,
+          self-storage-service,
+          warehouse-analytics,
+          warehouse-management-service,
+          warehouse-onboarding,
+          warehouse-operations,
+          warehouse-subscription
+        ]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.CONTAINER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: warehousing/${{ matrix.service }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ secrets.CONTAINER_REGISTRY }}/warehousing/${{ matrix.service }}:latest
+            ${{ secrets.CONTAINER_REGISTRY }}/warehousing/${{ matrix.service }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [build-images]
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: staging
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Staging
+        run: |
+          echo "Deploying to staging environment"
+          # Add deployment scripts here
+          
+      - name: Run Smoke Tests
+        run: |
+          echo "Running smoke tests on staging"
+          # Add smoke test scripts here
+          
+      - name: Notify Deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [build-images]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production environment"
+          # Add production deployment scripts here
+          
+      - name: Run Health Checks
+        run: |
+          echo "Running health checks on production"
+          # Add health check scripts here
+          
+      - name: Notify Deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+      - name: Cleanup old artifacts
+        run: |
+          echo "Cleaning up old artifacts and images"
+          # Add cleanup scripts here
