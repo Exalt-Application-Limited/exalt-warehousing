@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.exalt.warehousing</groupId>
+        <groupId>com.gogidix.warehousing</groupId>
         <artifactId>warehousing-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
@@ -55,7 +55,7 @@
         
         <!-- Missing Dependencies -->
         <dependency>
-            <groupId>com.exalt.warehousing</groupId>
+            <groupId>com.gogidix.warehousing</groupId>
             <artifactId>warehousing-shared</artifactId>
             <version>${project.version}</version>
         </dependency>

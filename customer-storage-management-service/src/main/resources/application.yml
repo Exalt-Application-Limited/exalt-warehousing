@@ -1,0 +1,109 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /customer-storage-management
+
+spring:
+  application:
+    name: customer-storage-management-service
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:customer_storage_management}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:validate}
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+  
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: customer-storage-management-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+# Eureka Configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+# Management and Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# Application-specific Configuration
+app:
+  management:
+    # Payment Processing
+    payment:
+      retry-attempts: 3
+      retry-delay-ms: 1000
+      auto-pay-processing-hour: 2
+      payment-reminder-days: [7, 3, 1]
+    
+    # Rental Management
+    rental:
+      renewal-notification-days: 30
+      grace-period-days: 5
+      late-fee-percentage: 10
+      min-rental-term-months: 1
+    
+    # Security
+    security:
+      access-code-length: 6
+      access-code-rotation-days: 90
+      max-failed-payment-attempts: 3
+    
+    # Notifications
+    notifications:
+      enabled: true
+      batch-size: 100
+      send-hour: 9
+
+# External Service URLs
+external-services:
+  marketplace-service: ${MARKETPLACE_SERVICE_URL:http://customer-storage-marketplace-service}
+  payment-service: ${PAYMENT_SERVICE_URL:http://payment-processing-service}
+  notification-service: ${NOTIFICATION_SERVICE_URL:http://notification-service}
+  kyc-service: ${KYC_SERVICE_URL:http://kyc-service}
+
+# Logging Configuration
+logging:
+  level:
+    com.exalt.warehousing.management: ${LOG_LEVEL:INFO}

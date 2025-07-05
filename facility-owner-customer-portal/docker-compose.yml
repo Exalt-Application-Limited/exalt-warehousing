@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  facility-owner-customer-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: facility-owner-customer-portal
+    ports:
+      - "3202:3202"
+    environment:
+      - NODE_ENV=development
+      - VUE_APP_API_BASE_URL=http://localhost:8206
+      - VUE_APP_AUTH_URL=http://localhost:8080
+      - VUE_APP_MARKETPLACE_URL=http://localhost:8230
+      - VUE_APP_BILLING_URL=http://localhost:8200
+    depends_on:
+      - warehouse-management-service
+      - auth-service
+      - billing-service
+    networks:
+      - warehousing-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3202/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  warehousing-network:
+    external: true
+
+volumes:
+  node_modules:
+    driver: local

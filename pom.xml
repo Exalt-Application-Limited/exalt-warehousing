@@ -5,7 +5,7 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.exalt.warehousing</groupId>
+    <groupId>com.gogidix.warehousing</groupId>
     <artifactId>warehousing-parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -29,6 +29,12 @@
         <module>billing-service</module>
         <module>config-server-enterprise</module>
         <module>cross-region-logistics-service</module>
+        <module>customer-storage-marketplace-service</module>
+        <module>customer-storage-management-service</module>
+        <module>storage-pricing-availability-engine</module>
+        <module>customer-support-communication-service</module>
+        <module>insurance-protection-service</module>
+        <module>moving-logistics-service</module>
         <module>fulfillment-service</module>
         <module>inventory-service</module>
         <module>self-storage-service</module>

@@ -1,0 +1,289 @@
+{
+  "app": {
+    "name": "Facility-Eigentümer Portal",
+    "tagline": "Verwalten Sie Ihre Lagerhalle mit Leichtigkeit"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "units": "Einheiten & Belegung",
+    "customers": "Kunden",
+    "financial": "Finanzberichte",
+    "support": "Support-Tickets",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "view": "Ansehen",
+    "search": "Suchen",
+    "filter": "Filter",
+    "sort": "Sortieren",
+    "export": "Exportieren",
+    "print": "Drucken",
+    "refresh": "Aktualisieren",
+    "close": "Schließen",
+    "submit": "Senden",
+    "reset": "Zurücksetzen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "yes": "Ja",
+    "no": "Nein",
+    "ok": "OK",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "warning": "Warnung",
+    "info": "Information"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen?",
+    "rememberMe": "Angemeldet bleiben",
+    "signIn": "Anmelden",
+    "welcome": "Willkommen zurück!",
+    "loginError": "Ungültige E-Mail oder Passwort",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
+  },
+  "dashboard": {
+    "title": "Kundenbetriebs-Dashboard",
+    "metrics": {
+      "customers": "Kunden",
+      "occupancy": "Belegung",
+      "revenue": "Umsatz",
+      "rating": "Bewertung",
+      "growth": "Wachstum"
+    },
+    "sections": {
+      "unitOccupancy": "Einheitenbelegungsstatus",
+      "customerActivity": "Kundenaktivität",
+      "financialPerformance": "Finanzielle Leistung",
+      "customerSatisfaction": "Kundenzufriedenheit",
+      "alerts": "Kundenwarnungen & Aktionen"
+    },
+    "quickStats": {
+      "waitlist": "Warteliste",
+      "averageStay": "Durchschnittl. Aufenthalt",
+      "recentSignups": "Kürzliche Anmeldungen",
+      "scheduledMoveouts": "Auszüge diese Woche",
+      "paymentReminders": "Zahlungserinnerungen"
+    }
+  },
+  "customers": {
+    "title": "Kundenverwaltung",
+    "search": "Kunden nach Name oder E-Mail suchen",
+    "status": {
+      "active": "Aktiv",
+      "pastDue": "Überfällig",
+      "endingSoon": "Endet bald",
+      "terminated": "Beendet"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "units": "Einheiten",
+      "rent": "Monatliche Miete",
+      "status": "Status",
+      "joinDate": "Beitrittsdatum",
+      "actions": "Aktionen"
+    },
+    "details": {
+      "personalInfo": "Persönliche Informationen",
+      "contactInfo": "Kontaktinformationen",
+      "leaseInfo": "Mietinformationen",
+      "paymentInfo": "Zahlungsinformationen",
+      "emergencyContact": "Notfallkontakt"
+    },
+    "actions": {
+      "viewDetails": "Details anzeigen",
+      "editCustomer": "Kunde bearbeiten",
+      "sendMessage": "Nachricht senden",
+      "viewInvoices": "Rechnungen anzeigen",
+      "extendLease": "Mietvertrag verlängern",
+      "terminateLease": "Mietvertrag beenden"
+    }
+  },
+  "units": {
+    "title": "Einheitenverwaltung",
+    "status": {
+      "available": "Verfügbar",
+      "occupied": "Belegt",
+      "reserved": "Reserviert",
+      "maintenance": "Wartung"
+    },
+    "types": {
+      "small": "Klein (5x5)",
+      "medium": "Mittel (10x10)",
+      "large": "Groß (10x15)",
+      "extraLarge": "Extra Groß (10x20)",
+      "climateControlled": "Klimatisiert"
+    },
+    "filters": {
+      "all": "Alle Einheiten",
+      "byStatus": "Nach Status filtern",
+      "byType": "Nach Typ filtern",
+      "byFloor": "Nach Etage filtern",
+      "byBuilding": "Nach Gebäude filtern"
+    },
+    "details": {
+      "unitInfo": "Einheiteninformationen",
+      "customerInfo": "Kundeninformationen",
+      "leaseInfo": "Mietinformationen",
+      "accessInfo": "Zugriffsinformationen"
+    },
+    "actions": {
+      "viewUnit": "Einheit anzeigen",
+      "editUnit": "Einheit bearbeiten",
+      "viewCustomer": "Kunde anzeigen",
+      "updateRate": "Tarif aktualisieren",
+      "changeStatus": "Status ändern",
+      "generateCode": "Zugangscode generieren"
+    }
+  },
+  "financial": {
+    "title": "Finanzberichte",
+    "revenue": {
+      "title": "Umsatzübersicht",
+      "total": "Gesamtumsatz",
+      "monthly": "Monatlicher Umsatz",
+      "yearly": "Jährlicher Umsatz",
+      "growth": "Wachstumsrate"
+    },
+    "breakdown": {
+      "monthlyRent": "Monatliche Miete",
+      "lateFees": "Verspätungsgebühren",
+      "insurance": "Versicherung",
+      "adminFees": "Verwaltungsgebühren",
+      "deposits": "Kautionen"
+    },
+    "metrics": {
+      "collectionRate": "Einzugsrate",
+      "outstanding": "Ausstehender Betrag",
+      "averageRate": "Durchschnittstarif",
+      "occupancyRevenue": "Belegungsumsatz"
+    },
+    "periods": {
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
+    }
+  },
+  "support": {
+    "title": "Support-Tickets",
+    "status": {
+      "open": "Offen",
+      "inProgress": "In Bearbeitung",
+      "resolved": "Gelöst",
+      "closed": "Geschlossen"
+    },
+    "priority": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "urgent": "Dringend"
+    },
+    "categories": {
+      "access": "Zugriffsprobleme",
+      "billing": "Abrechnung",
+      "maintenance": "Wartung",
+      "complaint": "Beschwerde",
+      "other": "Andere"
+    },
+    "actions": {
+      "viewTicket": "Ticket anzeigen",
+      "respond": "Antworten",
+      "assign": "Zuweisen",
+      "resolve": "Lösen",
+      "closeTicket": "Ticket schließen"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "sections": {
+      "profile": "Profileinstellungen",
+      "facility": "Anlageneinstellungen",
+      "notifications": "Benachrichtigungseinstellungen",
+      "billing": "Abrechnungseinstellungen",
+      "security": "Sicherheitseinstellungen"
+    },
+    "profile": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer",
+      "avatar": "Profilbild",
+      "timezone": "Zeitzone",
+      "language": "Sprache"
+    },
+    "facility": {
+      "name": "Anlagenname",
+      "address": "Adresse",
+      "phone": "Telefonnummer",
+      "email": "Kontakt-E-Mail",
+      "hours": "Öffnungszeiten",
+      "amenities": "Ausstattung"
+    },
+    "notifications": {
+      "email": "E-Mail-Benachrichtigungen",
+      "sms": "SMS-Benachrichtigungen",
+      "push": "Push-Benachrichtigungen",
+      "newCustomer": "Neue Kundenanmeldung",
+      "paymentDue": "Zahlungserinnerungen",
+      "maintenance": "Wartungswarnungen"
+    }
+  },
+  "messages": {
+    "success": {
+      "saved": "Änderungen erfolgreich gespeichert",
+      "deleted": "Element erfolgreich gelöscht",
+      "updated": "Element erfolgreich aktualisiert",
+      "sent": "Nachricht erfolgreich gesendet"
+    },
+    "error": {
+      "generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+      "validation": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut.",
+      "unauthorized": "Sie sind nicht berechtigt, diese Aktion auszuführen.",
+      "notFound": "Das angeforderte Element wurde nicht gefunden."
+    },
+    "confirm": {
+      "delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+      "logout": "Sind Sie sicher, dass Sie sich abmelden möchten?",
+      "terminate": "Sind Sie sicher, dass Sie diesen Mietvertrag beenden möchten?"
+    }
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "phone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "minLength": "Muss mindestens {min} Zeichen lang sein",
+    "maxLength": "Darf nicht länger als {max} Zeichen sein",
+    "numeric": "Muss eine Zahl sein",
+    "positive": "Muss eine positive Zahl sein",
+    "password": "Passwort muss mindestens 8 Zeichen mit Groß-, Kleinbuchstaben und Zahl enthalten"
+  },
+  "dateTime": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Diesen Monat",
+    "thisYear": "Dieses Jahr",
+    "lastWeek": "Letzte Woche",
+    "lastMonth": "Letzten Monat",
+    "lastYear": "Letztes Jahr"
+  },
+  "units": {
+    "currency": "€",
+    "percent": "%",
+    "sqft": "m²",
+    "months": "Monate",
+    "days": "Tage",
+    "hours": "Stunden"
+  }
+}

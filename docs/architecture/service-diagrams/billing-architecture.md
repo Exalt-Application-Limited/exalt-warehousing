@@ -1,4 +1,4 @@
-# Billing Service Architecture (`com.exalt.warehousing.billing`)
+# Billing Service Architecture (`com.gogidix.warehousing.billing`)
 
 ## Container Diagram
 ```plantuml

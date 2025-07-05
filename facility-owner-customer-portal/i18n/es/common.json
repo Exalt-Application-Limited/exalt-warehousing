@@ -1,0 +1,289 @@
+{
+  "app": {
+    "name": "Portal del Propietario de la Instalación",
+    "tagline": "Gestiona tu instalación de almacenamiento con facilidad"
+  },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "units": "Unidades y Ocupación",
+    "customers": "Clientes",
+    "financial": "Informes Financieros",
+    "support": "Tickets de Soporte",
+    "settings": "Configuración"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "export": "Exportar",
+    "print": "Imprimir",
+    "refresh": "Actualizar",
+    "close": "Cerrar",
+    "submit": "Enviar",
+    "reset": "Restablecer",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recuérdame",
+    "signIn": "Iniciar Sesión",
+    "welcome": "¡Bienvenido de vuelta!",
+    "loginError": "Correo electrónico o contraseña inválidos",
+    "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente."
+  },
+  "dashboard": {
+    "title": "Panel de Control de Operaciones del Cliente",
+    "metrics": {
+      "customers": "Clientes",
+      "occupancy": "Ocupación",
+      "revenue": "Ingresos",
+      "rating": "Calificación",
+      "growth": "Crecimiento"
+    },
+    "sections": {
+      "unitOccupancy": "Estado de Ocupación de Unidades",
+      "customerActivity": "Actividad del Cliente",
+      "financialPerformance": "Rendimiento Financiero",
+      "customerSatisfaction": "Satisfacción del Cliente",
+      "alerts": "Alertas y Acciones del Cliente"
+    },
+    "quickStats": {
+      "waitlist": "Lista de Espera",
+      "averageStay": "Estancia Promedio",
+      "recentSignups": "Registros Recientes",
+      "scheduledMoveouts": "Mudanzas Esta Semana",
+      "paymentReminders": "Recordatorios de Pago"
+    }
+  },
+  "customers": {
+    "title": "Gestión de Clientes",
+    "search": "Buscar clientes por nombre o correo electrónico",
+    "status": {
+      "active": "Activo",
+      "pastDue": "Vencido",
+      "endingSoon": "Termina Pronto",
+      "terminated": "Terminado"
+    },
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "units": "Unidades",
+      "rent": "Renta Mensual",
+      "status": "Estado",
+      "joinDate": "Fecha de Ingreso",
+      "actions": "Acciones"
+    },
+    "details": {
+      "personalInfo": "Información Personal",
+      "contactInfo": "Información de Contacto",
+      "leaseInfo": "Información del Contrato",
+      "paymentInfo": "Información de Pago",
+      "emergencyContact": "Contacto de Emergencia"
+    },
+    "actions": {
+      "viewDetails": "Ver Detalles",
+      "editCustomer": "Editar Cliente",
+      "sendMessage": "Enviar Mensaje",
+      "viewInvoices": "Ver Facturas",
+      "extendLease": "Extender Contrato",
+      "terminateLease": "Terminar Contrato"
+    }
+  },
+  "units": {
+    "title": "Gestión de Unidades",
+    "status": {
+      "available": "Disponible",
+      "occupied": "Ocupado",
+      "reserved": "Reservado",
+      "maintenance": "Mantenimiento"
+    },
+    "types": {
+      "small": "Pequeño (5x5)",
+      "medium": "Mediano (10x10)",
+      "large": "Grande (10x15)",
+      "extraLarge": "Extra Grande (10x20)",
+      "climateControlled": "Climatizado"
+    },
+    "filters": {
+      "all": "Todas las Unidades",
+      "byStatus": "Filtrar por Estado",
+      "byType": "Filtrar por Tipo",
+      "byFloor": "Filtrar por Piso",
+      "byBuilding": "Filtrar por Edificio"
+    },
+    "details": {
+      "unitInfo": "Información de la Unidad",
+      "customerInfo": "Información del Cliente",
+      "leaseInfo": "Información del Contrato",
+      "accessInfo": "Información de Acceso"
+    },
+    "actions": {
+      "viewUnit": "Ver Unidad",
+      "editUnit": "Editar Unidad",
+      "viewCustomer": "Ver Cliente",
+      "updateRate": "Actualizar Tarifa",
+      "changeStatus": "Cambiar Estado",
+      "generateCode": "Generar Código de Acceso"
+    }
+  },
+  "financial": {
+    "title": "Informes Financieros",
+    "revenue": {
+      "title": "Resumen de Ingresos",
+      "total": "Ingresos Totales",
+      "monthly": "Ingresos Mensuales",
+      "yearly": "Ingresos Anuales",
+      "growth": "Tasa de Crecimiento"
+    },
+    "breakdown": {
+      "monthlyRent": "Renta Mensual",
+      "lateFees": "Tarifas por Retraso",
+      "insurance": "Seguro",
+      "adminFees": "Tarifas Administrativas",
+      "deposits": "Depósitos"
+    },
+    "metrics": {
+      "collectionRate": "Tasa de Cobro",
+      "outstanding": "Saldo Pendiente",
+      "averageRate": "Tarifa Promedio",
+      "occupancyRevenue": "Ingresos por Ocupación"
+    },
+    "periods": {
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "yearly": "Anual"
+    }
+  },
+  "support": {
+    "title": "Tickets de Soporte",
+    "status": {
+      "open": "Abierto",
+      "inProgress": "En Progreso",
+      "resolved": "Resuelto",
+      "closed": "Cerrado"
+    },
+    "priority": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta",
+      "urgent": "Urgente"
+    },
+    "categories": {
+      "access": "Problemas de Acceso",
+      "billing": "Facturación",
+      "maintenance": "Mantenimiento",
+      "complaint": "Queja",
+      "other": "Otro"
+    },
+    "actions": {
+      "viewTicket": "Ver Ticket",
+      "respond": "Responder",
+      "assign": "Asignar",
+      "resolve": "Resolver",
+      "closeTicket": "Cerrar Ticket"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "sections": {
+      "profile": "Configuración del Perfil",
+      "facility": "Configuración de la Instalación",
+      "notifications": "Preferencias de Notificación",
+      "billing": "Configuración de Facturación",
+      "security": "Configuración de Seguridad"
+    },
+    "profile": {
+      "name": "Nombre Completo",
+      "email": "Dirección de Correo Electrónico",
+      "phone": "Número de Teléfono",
+      "avatar": "Foto de Perfil",
+      "timezone": "Zona Horaria",
+      "language": "Idioma"
+    },
+    "facility": {
+      "name": "Nombre de la Instalación",
+      "address": "Dirección",
+      "phone": "Número de Teléfono",
+      "email": "Correo de Contacto",
+      "hours": "Horarios de Operación",
+      "amenities": "Servicios"
+    },
+    "notifications": {
+      "email": "Notificaciones por Correo",
+      "sms": "Notificaciones SMS",
+      "push": "Notificaciones Push",
+      "newCustomer": "Nuevo Registro de Cliente",
+      "paymentDue": "Recordatorios de Pago",
+      "maintenance": "Alertas de Mantenimiento"
+    }
+  },
+  "messages": {
+    "success": {
+      "saved": "Cambios guardados exitosamente",
+      "deleted": "Elemento eliminado exitosamente",
+      "updated": "Elemento actualizado exitosamente",
+      "sent": "Mensaje enviado exitosamente"
+    },
+    "error": {
+      "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+      "network": "Error de red. Por favor, verifica tu conexión.",
+      "validation": "Por favor, verifica tu entrada e inténtalo de nuevo.",
+      "unauthorized": "No estás autorizado para realizar esta acción.",
+      "notFound": "El elemento solicitado no fue encontrado."
+    },
+    "confirm": {
+      "delete": "¿Estás seguro de que quieres eliminar este elemento?",
+      "logout": "¿Estás seguro de que quieres cerrar sesión?",
+      "terminate": "¿Estás seguro de que quieres terminar este contrato?"
+    }
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor, ingresa una dirección de correo válida",
+    "phone": "Por favor, ingresa un número de teléfono válido",
+    "minLength": "Debe tener al menos {min} caracteres",
+    "maxLength": "No debe tener más de {max} caracteres",
+    "numeric": "Debe ser un número",
+    "positive": "Debe ser un número positivo",
+    "password": "La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y un número"
+  },
+  "dateTime": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "thisWeek": "Esta Semana",
+    "thisMonth": "Este Mes",
+    "thisYear": "Este Año",
+    "lastWeek": "La Semana Pasada",
+    "lastMonth": "El Mes Pasado",
+    "lastYear": "El Año Pasado"
+  },
+  "units": {
+    "currency": "$",
+    "percent": "%",
+    "sqft": "pies²",
+    "months": "meses",
+    "days": "días",
+    "hours": "horas"
+  }
+}

@@ -1,4 +1,4 @@
-package com.exalt.warehousing.selfstorage.dto;
+package com.gogidix.warehousing.selfstorage.dto;
 
 import lombok.*;
 

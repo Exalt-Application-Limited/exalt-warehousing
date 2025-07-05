@@ -1,0 +1,67 @@
+{
+  "short_name": "Exalt Storage",
+  "name": "Exalt Warehouse Marketplace",
+  "description": "Find and book storage units near you",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1565c0",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshots/search.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "label": "Storage unit search"
+    },
+    {
+      "src": "/screenshots/facility.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "label": "Facility details"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Find Storage",
+      "short_name": "Search",
+      "description": "Search for storage units near you",
+      "url": "/search",
+      "icons": [{ "src": "/icons/search.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Bookings",
+      "short_name": "Bookings",
+      "description": "View your storage bookings",
+      "url": "/dashboard/bookings",
+      "icons": [{ "src": "/icons/bookings.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Calculate Size",
+      "short_name": "Calculator",
+      "description": "Storage size calculator",
+      "url": "/calculator",
+      "icons": [{ "src": "/icons/calculator.png", "sizes": "192x192" }]
+    }
+  ]
+}

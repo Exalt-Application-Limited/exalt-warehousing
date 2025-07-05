@@ -1,4 +1,4 @@
-# Fulfillment Service Architecture (`com.exalt.warehousing.fulfillment`)
+# Fulfillment Service Architecture (`com.gogidix.warehousing.fulfillment`)
 
 ## Container Diagram
 ```plantuml
@@ -12,8 +12,8 @@ System_Boundary(fulfillment, "Fulfillment Domain") {
     Container(packing_svc, "Packing Service", "Java", "Handles order packaging")
 }
 
-System_Ext(inventory_svc, "Inventory Service", "com.exalt.warehousing.inventory")
-System_Ext(shipping_svc, "Shipping Service", "com.exalt.warehousing.shipping")
+System_Ext(inventory_svc, "Inventory Service", "com.gogidix.warehousing.inventory")
+System_Ext(shipping_svc, "Shipping Service", "com.gogidix.warehousing.shipping")
 
 Rel(fulfillment_api, fulfillment_db, "Reads/Writes", "JDBC")
 Rel(fulfillment_api, inventory_svc, "Reserve inventory", "gRPC")

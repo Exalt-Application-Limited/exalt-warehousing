@@ -13,7 +13,7 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.exalt.warehousing</groupId>
+    <groupId>com.gogidix.warehousing</groupId>
     <artifactId>central-configuration-test</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>

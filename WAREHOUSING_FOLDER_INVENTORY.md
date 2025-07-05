@@ -1,6 +1,6 @@
 # Warehousing Domain Folder Inventory
 **Generated**: June 9, 2025  
-**Path**: C:\Users\frich\Desktop\Micro-Social-Ecommerce-Ecosystems\Exalt-Application-Limited\social-ecommerce-ecosystem\warehousing
+**Path**: C:\Users\frich\Desktop\Micro-Social-Ecommerce-Ecosystems\Gogidix-Application-Limited\social-ecommerce-ecosystem\warehousing
 
 ## Complete Folder Classification
 

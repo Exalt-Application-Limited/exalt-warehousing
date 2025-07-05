@@ -1,0 +1,289 @@
+{
+  "app": {
+    "name": "بوابة مالك المنشأة",
+    "tagline": "إدارة منشأة التخزين الخاصة بك بسهولة"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "units": "الوحدات والإشغال",
+    "customers": "العملاء",
+    "financial": "التقارير المالية",
+    "support": "تذاكر الدعم",
+    "settings": "الإعدادات"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تحرير",
+    "delete": "حذف",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "export": "تصدير",
+    "print": "طباعة",
+    "refresh": "تحديث",
+    "close": "إغلاق",
+    "submit": "إرسال",
+    "reset": "إعادة تعيين",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "موافق",
+    "error": "خطأ",
+    "success": "نجح",
+    "warning": "تحذير",
+    "info": "معلومات"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "rememberMe": "تذكرني",
+    "signIn": "تسجيل الدخول",
+    "welcome": "مرحباً بعودتك!",
+    "loginError": "بريد إلكتروني أو كلمة مرور غير صحيحة",
+    "sessionExpired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى."
+  },
+  "dashboard": {
+    "title": "لوحة تحكم عمليات العملاء",
+    "metrics": {
+      "customers": "العملاء",
+      "occupancy": "الإشغال",
+      "revenue": "الإيرادات",
+      "rating": "التقييم",
+      "growth": "النمو"
+    },
+    "sections": {
+      "unitOccupancy": "حالة إشغال الوحدات",
+      "customerActivity": "نشاط العملاء",
+      "financialPerformance": "الأداء المالي",
+      "customerSatisfaction": "رضا العملاء",
+      "alerts": "تنبيهات وإجراءات العملاء"
+    },
+    "quickStats": {
+      "waitlist": "قائمة الانتظار",
+      "averageStay": "متوسط الإقامة",
+      "recentSignups": "التسجيلات الحديثة",
+      "scheduledMoveouts": "المغادرات هذا الأسبوع",
+      "paymentReminders": "تذكيرات الدفع"
+    }
+  },
+  "customers": {
+    "title": "إدارة العملاء",
+    "search": "البحث عن العملاء بالاسم أو البريد الإلكتروني",
+    "status": {
+      "active": "نشط",
+      "pastDue": "متأخر الدفع",
+      "endingSoon": "ينتهي قريباً",
+      "terminated": "منتهي"
+    },
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "units": "الوحدات",
+      "rent": "الإيجار الشهري",
+      "status": "الحالة",
+      "joinDate": "تاريخ الانضمام",
+      "actions": "الإجراءات"
+    },
+    "details": {
+      "personalInfo": "المعلومات الشخصية",
+      "contactInfo": "معلومات الاتصال",
+      "leaseInfo": "معلومات الإيجار",
+      "paymentInfo": "معلومات الدفع",
+      "emergencyContact": "جهة الاتصال الطارئة"
+    },
+    "actions": {
+      "viewDetails": "عرض التفاصيل",
+      "editCustomer": "تحرير العميل",
+      "sendMessage": "إرسال رسالة",
+      "viewInvoices": "عرض الفواتير",
+      "extendLease": "تمديد الإيجار",
+      "terminateLease": "إنهاء الإيجار"
+    }
+  },
+  "units": {
+    "title": "إدارة الوحدات",
+    "status": {
+      "available": "متاح",
+      "occupied": "مشغول",
+      "reserved": "محجوز",
+      "maintenance": "صيانة"
+    },
+    "types": {
+      "small": "صغير (5x5)",
+      "medium": "متوسط (10x10)",
+      "large": "كبير (10x15)",
+      "extraLarge": "كبير جداً (10x20)",
+      "climateControlled": "مكيف"
+    },
+    "filters": {
+      "all": "جميع الوحدات",
+      "byStatus": "تصفية حسب الحالة",
+      "byType": "تصفية حسب النوع",
+      "byFloor": "تصفية حسب الطابق",
+      "byBuilding": "تصفية حسب المبنى"
+    },
+    "details": {
+      "unitInfo": "معلومات الوحدة",
+      "customerInfo": "معلومات العميل",
+      "leaseInfo": "معلومات الإيجار",
+      "accessInfo": "معلومات الوصول"
+    },
+    "actions": {
+      "viewUnit": "عرض الوحدة",
+      "editUnit": "تحرير الوحدة",
+      "viewCustomer": "عرض العميل",
+      "updateRate": "تحديث السعر",
+      "changeStatus": "تغيير الحالة",
+      "generateCode": "إنشاء رمز الوصول"
+    }
+  },
+  "financial": {
+    "title": "التقارير المالية",
+    "revenue": {
+      "title": "نظرة عامة على الإيرادات",
+      "total": "إجمالي الإيرادات",
+      "monthly": "الإيرادات الشهرية",
+      "yearly": "الإيرادات السنوية",
+      "growth": "معدل النمو"
+    },
+    "breakdown": {
+      "monthlyRent": "الإيجار الشهري",
+      "lateFees": "رسوم التأخير",
+      "insurance": "التأمين",
+      "adminFees": "الرسوم الإدارية",
+      "deposits": "الودائع"
+    },
+    "metrics": {
+      "collectionRate": "معدل التحصيل",
+      "outstanding": "الرصيد المستحق",
+      "averageRate": "متوسط السعر",
+      "occupancyRevenue": "إيرادات الإشغال"
+    },
+    "periods": {
+      "daily": "يومي",
+      "weekly": "أسبوعي",
+      "monthly": "شهري",
+      "yearly": "سنوي"
+    }
+  },
+  "support": {
+    "title": "تذاكر الدعم",
+    "status": {
+      "open": "مفتوح",
+      "inProgress": "قيد المعالجة",
+      "resolved": "محلول",
+      "closed": "مغلق"
+    },
+    "priority": {
+      "low": "منخفض",
+      "medium": "متوسط",
+      "high": "عالي",
+      "urgent": "عاجل"
+    },
+    "categories": {
+      "access": "مشاكل الوصول",
+      "billing": "الفوترة",
+      "maintenance": "الصيانة",
+      "complaint": "شكوى",
+      "other": "أخرى"
+    },
+    "actions": {
+      "viewTicket": "عرض التذكرة",
+      "respond": "الرد",
+      "assign": "تعيين",
+      "resolve": "حل",
+      "closeTicket": "إغلاق التذكرة"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "sections": {
+      "profile": "إعدادات الملف الشخصي",
+      "facility": "إعدادات المنشأة",
+      "notifications": "تفضيلات الإشعارات",
+      "billing": "إعدادات الفوترة",
+      "security": "إعدادات الأمان"
+    },
+    "profile": {
+      "name": "الاسم الكامل",
+      "email": "عنوان البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "avatar": "صورة الملف الشخصي",
+      "timezone": "المنطقة الزمنية",
+      "language": "اللغة"
+    },
+    "facility": {
+      "name": "اسم المنشأة",
+      "address": "العنوان",
+      "phone": "رقم الهاتف",
+      "email": "بريد الاتصال",
+      "hours": "ساعات العمل",
+      "amenities": "المرافق"
+    },
+    "notifications": {
+      "email": "إشعارات البريد الإلكتروني",
+      "sms": "إشعارات الرسائل النصية",
+      "push": "الإشعارات المدفوعة",
+      "newCustomer": "تسجيل عميل جديد",
+      "paymentDue": "تذكيرات الدفع المستحق",
+      "maintenance": "تنبيهات الصيانة"
+    }
+  },
+  "messages": {
+    "success": {
+      "saved": "تم حفظ التغييرات بنجاح",
+      "deleted": "تم حذف العنصر بنجاح",
+      "updated": "تم تحديث العنصر بنجاح",
+      "sent": "تم إرسال الرسالة بنجاح"
+    },
+    "error": {
+      "generic": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+      "network": "خطأ في الشبكة. يرجى التحقق من اتصالك.",
+      "validation": "يرجى التحقق من إدخالك والمحاولة مرة أخرى.",
+      "unauthorized": "غير مخول لك لتنفيذ هذا الإجراء.",
+      "notFound": "العنصر المطلوب غير موجود."
+    },
+    "confirm": {
+      "delete": "هل أنت متأكد من رغبتك في حذف هذا العنصر؟",
+      "logout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "terminate": "هل أنت متأكد من رغبتك في إنهاء هذا الإيجار؟"
+    }
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "phone": "يرجى إدخال رقم هاتف صحيح",
+    "minLength": "يجب أن يكون على الأقل {min} أحرف",
+    "maxLength": "يجب أن لا يزيد عن {max} أحرف",
+    "numeric": "يجب أن يكون رقماً",
+    "positive": "يجب أن يكون رقماً موجباً",
+    "password": "كلمة المرور يجب أن تكون على الأقل 8 أحرف مع أحرف كبيرة وصغيرة ورقم"
+  },
+  "dateTime": {
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "thisWeek": "هذا الأسبوع",
+    "thisMonth": "هذا الشهر",
+    "thisYear": "هذا العام",
+    "lastWeek": "الأسبوع الماضي",
+    "lastMonth": "الشهر الماضي",
+    "lastYear": "العام الماضي"
+  },
+  "units": {
+    "currency": "ر.س",
+    "percent": "%",
+    "sqft": "قدم مربع",
+    "months": "شهور",
+    "days": "أيام",
+    "hours": "ساعات"
+  }
+}
