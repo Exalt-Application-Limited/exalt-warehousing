@@ -260,7 +260,7 @@ public class WarehouseBatchProcessingService {
             
             if (locationOpt.isPresent()) {
                 Location location = locationOpt.get();
-                UUID zoneId = (UUID)location.getZone();
+                UUID zoneId = UUID.fromString(location.getZone().getId());
                 
                 // Initialize the list if needed
                 itemsByZone.computeIfAbsent(zoneId, k -> new ArrayList<>());
