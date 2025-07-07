@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -43,7 +44,7 @@ public class ZoneServiceImpl implements ZoneService {
                 .orElseThrow(() -> new ResourceNotFoundException("Warehouse not found with id: " + zone.getWarehouse().getId()));
         
         // Validate zone code uniqueness within warehouse
-        if (zoneRepository.existsByCodeAndWarehouseId(zone.getCode(), (UUID)zone.getWarehouse())) {
+        if (zoneRepository.existsByCodeAndWarehouseId(zone.getCode(), UUID.fromString(zone.getWarehouse().getId()))) {
             throw new DuplicateResourceException("Zone with code " + zone.getCode() + 
                     " already exists in warehouse with id " + zone.getWarehouse().getId());
         }
@@ -67,7 +68,7 @@ public class ZoneServiceImpl implements ZoneService {
             
             // Generate code if not provided
             if (zone.getCode() == null || zone.getCode().trim().isEmpty()) {
-                zone.setCode(generateZoneCode((UUID)zone.getWarehouse(), zone.getType()));
+                zone.setCode(generateZoneCode(UUID.fromString(zone.getWarehouse().getId()), zone.getType()));
             }
         });
         
@@ -84,7 +85,7 @@ public class ZoneServiceImpl implements ZoneService {
         
         // Check if code is being changed and if the new code already exists in the warehouse
         if (!existingZone.getCode().equals(zoneDetails.getCode()) && 
-                zoneRepository.existsByCodeAndWarehouseId(zoneDetails.getCode(), (UUID)existingZone.getWarehouse())) {
+                zoneRepository.existsByCodeAndWarehouseId(zoneDetails.getCode(), UUID.fromString(existingZone.getWarehouse().getId()))) {
             throw new DuplicateResourceException("Zone with code " + zoneDetails.getCode() + 
                     " already exists in warehouse with id " + existingZone.getWarehouse().getId());
         }

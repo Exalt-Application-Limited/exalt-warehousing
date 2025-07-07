@@ -113,7 +113,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Transactional(readOnly = true)
     public WarehouseSubscription getSubscription(String subscriptionId) {
         return subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(() -> ResourceNotFoundException.warehouseNotFound(subscriptionId));
+                .orElseThrow(() -> ResourceNotFoundException.warehouseNotFound(UUID.fromString(subscriptionId)));
     }
 
     @Override
@@ -374,13 +374,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         
         return UsageSummary.builder()
             .subscriptionId(UUID.fromString(subscriptionId))
-            .storageUsedGB(subscription.getStorageUsage())
-            .storageAllowedGB(subscription.getStorageLimit())
+            .storageUsedGB(BigDecimal.valueOf(subscription.getStorageUsage()))
+            .storageAllowedGB(BigDecimal.valueOf(subscription.getStorageLimit()))
             .ordersProcessed(subscription.getOrdersCount())
             .ordersAllowed(subscription.getOrdersLimit())
             .activeUsers(subscription.getActiveUsers())
             .usersAllowed(subscription.getUsersLimit())
-            .apiCalls(subscription.getApiRequestsUsed())
+            .apiCalls(subscription.getApiRequestsUsed().intValue())
             .apiCallsAllowed(subscription.getApiRequestsLimit())
             .utilizationPercentage(subscription.getStorageUsagePercentage())
             .periodStart(subscription.getCurrentPeriodStart())

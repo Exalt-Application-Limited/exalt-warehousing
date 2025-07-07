@@ -246,6 +246,18 @@ public class WarehouseSubscription extends BaseEntity {
     private Boolean prioritySupportEnabled = false;
 
     /**
+     * Number of active users
+     */
+    @Column(name = "active_users", nullable = false)
+    private Integer activeUsers = 0;
+
+    /**
+     * User limit for the subscription
+     */
+    @Column(name = "users_limit", nullable = false)
+    private Integer usersLimit = 0;
+
+    /**
      * Usage records associated with this subscription
      */
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -485,5 +497,26 @@ public class WarehouseSubscription extends BaseEntity {
         this.apiRequestsLimit = newPlan.getApiRequestsPerSecond();
         this.analyticsEnabled = newPlan.isIncludesAnalytics();
         this.prioritySupportEnabled = newPlan.isIncludesPrioritySupport();
+    }
+
+    /**
+     * Get current billing period start date
+     * 
+     * @return current period start date
+     */
+    public LocalDateTime getCurrentPeriodStart() {
+        if (lastBillingDate != null) {
+            return lastBillingDate;
+        }
+        return startDate;
+    }
+
+    /**
+     * Get current billing period end date
+     * 
+     * @return current period end date
+     */
+    public LocalDateTime getCurrentPeriodEnd() {
+        return nextBillingDate;
     }
 }

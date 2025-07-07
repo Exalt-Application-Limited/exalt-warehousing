@@ -62,7 +62,7 @@ public class InventoryReservationListener {
         
         // Update inventory status to RESERVED
         order.setInventoryStatus(InventoryStatus.RESERVED);
-        order.setInventoryReservationId(event.getReservationId());
+        order.setInventoryReservationId(UUID.fromString(event.getReservationId()));
         order.setInventoryReservationExpiresAt(event.getExpiresAt());
         
         // Add reservation details to notes

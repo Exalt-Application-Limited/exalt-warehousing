@@ -34,7 +34,7 @@ public interface SubscriptionService {
      * @param createdBy user creating the subscription
      * @return created subscription
      */
-    WarehouseSubscription createSubscription(UUID warehouseId, SubscriptionPlan plan, 
+    WarehouseSubscription createSubscription(String warehouseId, SubscriptionPlan plan, 
                                            String billingEmail, boolean isAnnualBilling, 
                                            String createdBy);
 
@@ -47,7 +47,7 @@ public interface SubscriptionService {
      * @param createdBy user creating the subscription
      * @return trial subscription
      */
-    WarehouseSubscription startTrial(UUID warehouseId, String billingEmail, 
+    WarehouseSubscription startTrial(String warehouseId, String billingEmail, 
                                    int trialDays, String createdBy);
 
     /**
@@ -56,7 +56,7 @@ public interface SubscriptionService {
      * @param subscriptionId the subscription ID
      * @return subscription
      */
-    WarehouseSubscription getSubscription(UUID subscriptionId);
+    WarehouseSubscription getSubscription(String subscriptionId);
 
     /**
      * Get subscription by warehouse ID
@@ -64,7 +64,7 @@ public interface SubscriptionService {
      * @param warehouseId the warehouse ID
      * @return subscription if exists
      */
-    WarehouseSubscription getSubscriptionByWarehouse(UUID warehouseId);
+    WarehouseSubscription getSubscriptionByWarehouse(String warehouseId);
 
     /**
      * Get active subscription by warehouse ID
@@ -72,7 +72,7 @@ public interface SubscriptionService {
      * @param warehouseId the warehouse ID
      * @return active subscription if exists
      */
-    WarehouseSubscription getActiveSubscriptionByWarehouse(UUID warehouseId);
+    WarehouseSubscription getActiveSubscriptionByWarehouse(String warehouseId);
 
     /**
      * Update subscription plan
@@ -82,7 +82,7 @@ public interface SubscriptionService {
      * @param updatedBy user updating the subscription
      * @return updated subscription
      */
-    WarehouseSubscription upgradePlan(UUID subscriptionId, SubscriptionPlan newPlan, String updatedBy);
+    WarehouseSubscription upgradePlan(String subscriptionId, SubscriptionPlan newPlan, String updatedBy);
 
     /**
      * Change billing frequency
@@ -92,7 +92,7 @@ public interface SubscriptionService {
      * @param updatedBy user updating the subscription
      * @return updated subscription
      */
-    WarehouseSubscription changeBillingFrequency(UUID subscriptionId, boolean isAnnualBilling, String updatedBy);
+    WarehouseSubscription changeBillingFrequency(String subscriptionId, boolean isAnnualBilling, String updatedBy);
 
     /**
      * Cancel subscription
@@ -103,7 +103,7 @@ public interface SubscriptionService {
      * @param cancelledBy user cancelling the subscription
      * @return cancelled subscription
      */
-    WarehouseSubscription cancelSubscription(UUID subscriptionId, String reason, 
+    WarehouseSubscription cancelSubscription(String subscriptionId, String reason, 
                                            boolean cancelAtPeriodEnd, String cancelledBy);
 
     /**
@@ -113,7 +113,7 @@ public interface SubscriptionService {
      * @param reactivatedBy user reactivating the subscription
      * @return reactivated subscription
      */
-    WarehouseSubscription reactivateSubscription(UUID subscriptionId, String reactivatedBy);
+    WarehouseSubscription reactivateSubscription(String subscriptionId, String reactivatedBy);
 
     /**
      * Pause subscription
@@ -122,7 +122,7 @@ public interface SubscriptionService {
      * @param pausedBy user pausing the subscription
      * @return paused subscription
      */
-    WarehouseSubscription pauseSubscription(UUID subscriptionId, String pausedBy);
+    WarehouseSubscription pauseSubscription(String subscriptionId, String pausedBy);
 
     /**
      * Resume paused subscription
@@ -131,7 +131,7 @@ public interface SubscriptionService {
      * @param resumedBy user resuming the subscription
      * @return resumed subscription
      */
-    WarehouseSubscription resumeSubscription(UUID subscriptionId, String resumedBy);
+    WarehouseSubscription resumeSubscription(String subscriptionId, String resumedBy);
 
     // ========== Usage Tracking ==========
 
@@ -145,7 +145,7 @@ public interface SubscriptionService {
      * @param description usage description
      * @return usage record
      */
-    UsageRecord recordUsage(UUID subscriptionId, UsageRecord.UsageType usageType, 
+    UsageRecord recordUsage(String subscriptionId, UsageRecord.UsageType usageType, 
                           BigDecimal quantity, String unit, String description);
 
     /**
@@ -156,7 +156,7 @@ public interface SubscriptionService {
      * @param ordersProcessed orders processed
      * @param apiRequests API requests made
      */
-    void updateUsageCounters(UUID warehouseId, int storageUsed, int ordersProcessed, long apiRequests);
+    void updateUsageCounters(String warehouseId, int storageUsed, int ordersProcessed, long apiRequests);
 
     /**
      * Get usage records for subscription
@@ -167,7 +167,7 @@ public interface SubscriptionService {
      * @param pageable pagination
      * @return page of usage records
      */
-    Page<UsageRecord> getUsageRecords(UUID subscriptionId, LocalDateTime startDate, 
+    Page<UsageRecord> getUsageRecords(String subscriptionId, LocalDateTime startDate, 
                                     LocalDateTime endDate, Pageable pageable);
 
     /**
@@ -176,7 +176,7 @@ public interface SubscriptionService {
      * @param subscriptionId the subscription ID
      * @return usage summary map
      */
-    Map<String, Object> getCurrentUsageSummary(UUID subscriptionId);
+    com.gogidix.warehousing.subscription.dto.UsageSummary getCurrentUsageSummary(String subscriptionId);
 
     /**
      * Check if subscription usage limits are exceeded
@@ -184,7 +184,7 @@ public interface SubscriptionService {
      * @param subscriptionId the subscription ID
      * @return usage limits status
      */
-    Map<String, Boolean> checkUsageLimits(UUID subscriptionId);
+    Map<String, Boolean> checkUsageLimits(String subscriptionId);
 
     // ========== Billing Management ==========
 
@@ -194,7 +194,7 @@ public interface SubscriptionService {
      * @param subscriptionId the subscription ID
      * @return billing record
      */
-    BillingRecord processBilling(UUID subscriptionId);
+    BillingRecord processBilling(String subscriptionId);
 
     /**
      * Process billing for all due subscriptions
@@ -211,7 +211,7 @@ public interface SubscriptionService {
      * @param billingPeriodEnd billing period end
      * @return billing record
      */
-    BillingRecord generateInvoice(UUID subscriptionId, LocalDateTime billingPeriodStart, 
+    BillingRecord generateInvoice(String subscriptionId, LocalDateTime billingPeriodStart, 
                                 LocalDateTime billingPeriodEnd);
 
     /**
@@ -220,7 +220,7 @@ public interface SubscriptionService {
      * @param subscriptionId the subscription ID
      * @return overage amount
      */
-    BigDecimal calculateOverageCharges(UUID subscriptionId);
+    BigDecimal calculateOverageCharges(String subscriptionId);
 
     /**
      * Get billing records for subscription
@@ -229,7 +229,7 @@ public interface SubscriptionService {
      * @param pageable pagination
      * @return page of billing records
      */
-    Page<BillingRecord> getBillingRecords(UUID subscriptionId, Pageable pageable);
+    Page<BillingRecord> getBillingRecords(String subscriptionId, Pageable pageable);
 
     /**
      * Mark invoice as paid
@@ -238,7 +238,7 @@ public interface SubscriptionService {
      * @param amount amount paid
      * @param transactionId transaction ID
      */
-    void markInvoiceAsPaid(UUID billingRecordId, BigDecimal amount, String transactionId);
+    void markInvoiceAsPaid(String billingRecordId, BigDecimal amount, String transactionId);
 
     /**
      * Mark invoice as failed
@@ -246,7 +246,7 @@ public interface SubscriptionService {
      * @param billingRecordId billing record ID
      * @param failureReason failure reason
      */
-    void markInvoiceAsFailed(UUID billingRecordId, String failureReason);
+    void markInvoiceAsFailed(String billingRecordId, String failureReason);
 
     // ========== Payment Processing ==========
 
@@ -257,7 +257,7 @@ public interface SubscriptionService {
      * @param paymentMethodId payment method ID
      * @return updated subscription
      */
-    WarehouseSubscription setupPaymentMethod(UUID subscriptionId, String paymentMethodId);
+    WarehouseSubscription setupPaymentMethod(String subscriptionId, String paymentMethodId);
 
     /**
      * Process payment for billing record
@@ -265,7 +265,7 @@ public interface SubscriptionService {
      * @param billingRecordId billing record ID
      * @return payment success status
      */
-    boolean processPayment(UUID billingRecordId);
+    boolean processPayment(String billingRecordId);
 
     /**
      * Retry failed payment
@@ -273,7 +273,7 @@ public interface SubscriptionService {
      * @param billingRecordId billing record ID
      * @return payment success status
      */
-    boolean retryFailedPayment(UUID billingRecordId);
+    boolean retryFailedPayment(String billingRecordId);
 
     /**
      * Process refund
@@ -283,7 +283,7 @@ public interface SubscriptionService {
      * @param reason refund reason
      * @return refund success status
      */
-    boolean processRefund(UUID billingRecordId, BigDecimal refundAmount, String reason);
+    boolean processRefund(String billingRecordId, BigDecimal refundAmount, String reason);
 
     // ========== Discount Management ==========
 
@@ -296,7 +296,7 @@ public interface SubscriptionService {
      * @param appliedBy user applying the discount
      * @return updated subscription
      */
-    WarehouseSubscription applyDiscount(UUID subscriptionId, BigDecimal discountPercentage, 
+    WarehouseSubscription applyDiscount(String subscriptionId, BigDecimal discountPercentage, 
                                       LocalDateTime endDate, String appliedBy);
 
     /**
@@ -306,7 +306,7 @@ public interface SubscriptionService {
      * @param removedBy user removing the discount
      * @return updated subscription
      */
-    WarehouseSubscription removeDiscount(UUID subscriptionId, String removedBy);
+    WarehouseSubscription removeDiscount(String subscriptionId, String removedBy);
 
     // ========== Analytics and Reporting ==========
 
@@ -453,7 +453,7 @@ public interface SubscriptionService {
      * @param pageable pagination
      * @return page of subscriptions
      */
-    Page<WarehouseSubscription> getSubscriptionsForTenant(UUID tenantId, Pageable pageable);
+    Page<WarehouseSubscription> getSubscriptionsForTenant(String tenantId, Pageable pageable);
 
     /**
      * Get tenant usage summary
@@ -461,7 +461,7 @@ public interface SubscriptionService {
      * @param tenantId tenant ID
      * @return tenant usage summary
      */
-    Map<String, Object> getTenantUsageSummary(UUID tenantId);
+    Map<String, Object> getTenantUsageSummary(String tenantId);
 
     // ========== Controller-Compatible Methods ==========
     // Methods with String IDs and DTO parameters to match the REST controller
@@ -526,10 +526,6 @@ public interface SubscriptionService {
      */
     Page<UsageRecord> getUsageHistory(String subscriptionId, java.time.LocalDate startDate, java.time.LocalDate endDate, Pageable pageable);
     
-    /**
-     * Get usage summary with String ID
-     */
-    com.gogidix.warehousing.subscription.dto.UsageSummary getCurrentUsageSummary(String subscriptionId);
     
     /**
      * Process billing with String ID
